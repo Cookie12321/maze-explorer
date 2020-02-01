@@ -48,6 +48,7 @@ function preload ()
     this.load.image('ground', 'assets/platform.png');
     this.load.image('wallv', 'assets/wallv.png');
     this.load.image('wallh', 'assets/wallh.png');
+    this.load.image('ground', 'assets/platform2.png');
     this.load.image('star', 'assets/star.png');
     this.load.image('bomb', 'assets/bomb.png');
     this.load.spritesheet('dude', 'assets/dude.png', { frameWidth: 32, frameHeight: 48 });
@@ -86,8 +87,6 @@ function create ()
     walls.create(550, 320, 'wallh').setScale(1);
     walls.create(650, 420, 'wallh').setScale(1);
     walls.create(750, 520, 'wallh').setScale(1);
-
-
 
     // The player and its settings
     player = this.physics.add.sprite(400, 250, 'dude');
