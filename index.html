@@ -53,6 +53,103 @@ var scoreText;
 
 var game = new Phaser.Game(config);
 
+function makeWall(xMin, xMax, yMin, yMax)
+{
+    width = xMax - xMin;
+    height = yMax - yMin;
+
+    if (width * height <= 50000)
+    {
+        return;
+    }
+    // else// if (width >= height)// vertical walls
+    // {
+    //     var cellsX = (width) / 50; // max is 20, min is 1
+    //     var wallX = (Math.floor(Math.random() * cellsX))*50 + xMin;
+
+    //     if(wallX == xMin)
+    //     {
+    //         wallX += 50;
+    //     }
+    //     else if (wallX == xMax)
+    //     {
+    //         wallX -= 50;
+    //     }
+
+    //     console.log("wallX: ", wallX);
+
+    //     var missingWall = Math.floor(Math.random()*(height / 50)) * 50;
+
+    //     for(var i = yMin; i < yMax; i += 50){
+    //         if (i != missingWall)
+    //             walls.create(wallX, i + 25, 'wallv');
+    //     }
+
+    //     // left region
+    //     var reg1xMin = xMin;
+    //     var reg1xMax = wallX;
+    //     var reg1yMin = yMin;
+    //     var reg1yMax = yMax;
+
+    //     // right region
+    //     var reg2xMin = wallX;
+    //     var reg2xMax = xMax;
+    //     var reg2yMin = yMin;
+    //     var reg2yMax = yMax;
+
+    //     //makeWall(reg1xMin, reg1xMax, reg1yMin, reg1yMax);
+    //     setTimeout(function() {
+    //        makeWall(reg1xMin, reg1xMax, reg1yMin, reg1yMax);
+    //     }, 1000);
+    //     //makeWall(reg2xMin, reg2xMax, reg2yMin, reg2yMax);
+    //     setTimeout(function() {
+    //        makeWall(reg2xMin, reg2xMax, reg2yMin, reg2yMax);
+    //     }, 1000);
+    // }
+    else // horizontal wall
+    {
+        var cellsY = (height) / 50; // max is 20, min is 1
+        var wallY = (Math.floor(Math.random() * cellsY))*50 + yMin;
+
+        if(wallY == yMin)
+        {
+            wallY += 50;
+        }
+        else if (wallY == yMax)
+        {
+            wallY -= 50;
+        }
+
+        console.log("wallY: ", wallY);
+
+        var missingWall = Math.floor(Math.random()*(width / 50)) * 50;
+
+        for(var i = xMin; i < xMax; i += 50){
+            if (i != missingWall)
+                walls.create(i + 25, wallY, 'wallh');
+        }
+
+        // top region
+        var reg1xMin = xMin;
+        var reg1xMax = xMax;
+        var reg1yMin = yMin;
+        var reg1yMax = wallY;
+
+        console.log("wallY: ", wallY);
+
+        // bot region
+        var reg2xMin = xMin;
+        var reg2xMax = xMax;
+        var reg2yMin = wallY;
+        var reg2yMax = yMax;
+
+        console.log("wallY: ", wallY);
+
+        //makeWall(reg1xMin, reg1xMax, reg1yMin, reg1yMax);
+        //makeWall(reg2xMin, reg2xMax, reg2yMin, reg2yMax);
+    }
+}
+
 
 function preload ()
 {
@@ -63,6 +160,7 @@ function preload ()
     this.load.image('ground', 'assets/platform2.png');
     this.load.image('star', 'assets/star.png');
     this.load.spritesheet('dude', 'assets/dude.png', { frameWidth: 26, frameHeight: 35 });
+    this.load.spritesheet('char', 'assets/char.png', { frameWidth: 32, frameHeight: 35 });
     //
 }
 
@@ -86,58 +184,63 @@ function create ()
 
     walls = this.physics.add.staticGroup();
 
-    walls.create(450, 100, 'wallh').setScale(1);
-    walls.create(500, 100, 'wallh').setScale(1);
-    walls.create(550, 100, 'wallh').setScale(1);
-    walls.create(600, 100, 'wallh').setScale(1);
-    walls.create(650, 100, 'wallh').setScale(1);
-    walls.create(700, 100, 'wallh').setScale(1);
-    walls.create(750, 100, 'wallh').setScale(1);
+    setTimeout(function() {
+        makeWall(0,1000,0,600)
+    }, 10);
 
-    walls.create(300, 100, 'wallh').setScale(1);
-    walls.create(300, 163, 'wallh').setScale(1);
 
-    walls.create(450, 150, 'wallh').setScale(1);
-    walls.create(500, 150, 'wallh').setScale(1);
-    walls.create(550, 150, 'wallh').setScale(1);
-    walls.create(600, 150, 'wallh').setScale(1);
-    walls.create(650, 150, 'wallh').setScale(1);
+    // walls.create(450, 100, 'wallh').setScale(1);
+    // walls.create(500, 100, 'wallh').setScale(1);
+    // walls.create(550, 100, 'wallh').setScale(1);
+    // walls.create(600, 100, 'wallh').setScale(1);
+    // walls.create(650, 100, 'wallh').setScale(1);
+    // walls.create(700, 100, 'wallh').setScale(1);
+    // walls.create(750, 100, 'wallh').setScale(1);
 
-    walls.create(675, 175, 'wallv').setScale(1);
-    walls.create(675, 225, 'wallv').setScale(1);
-    walls.create(675, 275, 'wallv').setScale(1);
-    walls.create(675, 325, 'wallv').setScale(1);
+    // walls.create(300, 100, 'wallh').setScale(1);
+    // walls.create(300, 163, 'wallh').setScale(1);
 
-    walls.create(725, 175, 'wallv').setScale(1);
-    walls.create(725, 225, 'wallv').setScale(1);
-    walls.create(725, 275, 'wallv').setScale(1);
-    walls.create(725, 325, 'wallv').setScale(1);
+    // walls.create(450, 150, 'wallh').setScale(1);
+    // walls.create(500, 150, 'wallh').setScale(1);
+    // walls.create(550, 150, 'wallh').setScale(1);
+    // walls.create(600, 150, 'wallh').setScale(1);
+    // walls.create(650, 150, 'wallh').setScale(1);
 
-    walls.create(450, 320, 'wallh').setScale(1);
-    walls.create(550, 320, 'wallh').setScale(1);
-    walls.create(650, 420, 'wallh').setScale(1);
-    walls.create(750, 520, 'wallh').setScale(1);
+    // walls.create(675, 175, 'wallv').setScale(1);
+    // walls.create(675, 225, 'wallv').setScale(1);
+    // walls.create(675, 275, 'wallv').setScale(1);
+    // walls.create(675, 325, 'wallv').setScale(1);
 
-    player = this.physics.add.sprite(400, 250, 'dude');
+    // walls.create(725, 175, 'wallv').setScale(1);
+    // walls.create(725, 225, 'wallv').setScale(1);
+    // walls.create(725, 275, 'wallv').setScale(1);
+    // walls.create(725, 325, 'wallv').setScale(1);
+
+    // walls.create(450, 320, 'wallh').setScale(1);
+    // walls.create(550, 320, 'wallh').setScale(1);
+    // walls.create(650, 420, 'wallh').setScale(1);
+    // walls.create(750, 520, 'wallh').setScale(1);
+
+    player = this.physics.add.sprite(400, 250, 'char');
 
     player.setCollideWorldBounds(true);
 
     this.anims.create({
         key: 'left',
-        frames: this.anims.generateFrameNumbers('dude', { start: 0, end: 3 }),
+        frames: this.anims.generateFrameNumbers('char', { start: 0, end: 3 }),
         frameRate: 10,
         repeat: -1
     });
 
     this.anims.create({
         key: 'turn',
-        frames: [ { key: 'dude', frame: 4 } ],
+        frames: [ { key: 'char', frame: 4 } ],
         frameRate: 20
     });
 
     this.anims.create({
         key: 'right',
-        frames: this.anims.generateFrameNumbers('dude', { start: 5, end: 8 }),
+        frames: this.anims.generateFrameNumbers('char', { start: 5, end: 8 }),
         frameRate: 10,
         repeat: -1
     });
