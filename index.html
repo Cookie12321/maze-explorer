@@ -8,9 +8,20 @@
         body {
             margin: 0;
         }
+        canvas{
+            display:block;
+            margin:auto;
+        }
+        #phaser-maze{
+            margin-top:50px;
+        }
+        }
     </style>
 </head>
 <body>
+
+<div id="phaser-maze">
+</div>
 
 <script type="text/javascript">
 
@@ -18,6 +29,7 @@ var config = {
     type: Phaser.AUTO,
     width: 1000,
     height: 600,
+    parent: 'phaser-maze',
     physics: {
         default: 'arcade',
         arcade: {
@@ -33,7 +45,6 @@ var config = {
 
 var player;
 var stars;
-var bombs;
 var walls;
 var cursors;
 var score = 0;
@@ -41,6 +52,7 @@ var gameOver = false;
 var scoreText;
 
 var game = new Phaser.Game(config);
+
 
 function preload ()
 {
@@ -50,13 +62,12 @@ function preload ()
     this.load.image('wallh', 'assets/wallh.png');
     this.load.image('ground', 'assets/platform2.png');
     this.load.image('star', 'assets/star.png');
-    this.load.image('bomb', 'assets/bomb.png');
-    this.load.spritesheet('dude', 'assets/dude.png', { frameWidth: 32, frameHeight: 48 });
+    this.load.spritesheet('dude', 'assets/dude.png', { frameWidth: 26, frameHeight: 35 });
+    //
 }
 
 function create ()
-{
-    //  A simple background for our game
+{   
     this.add.image(100, 100, 'dirt');
     this.add.image(300, 100, 'dirt');
     this.add.image(500, 100, 'dirt');
@@ -74,11 +85,6 @@ function create ()
     this.add.image(900, 500, 'dirt');
 
     walls = this.physics.add.staticGroup();
-
-    walls.create(750, 220, 'wallv').setScale(1);
-    walls.create(750, 320, 'wallv').setScale(1);
-    walls.create(750, 420, 'wallv').setScale(1);
-    walls.create(750, 120, 'wallv').setScale(1);
 
     walls.create(450, 100, 'wallh').setScale(1);
     walls.create(500, 100, 'wallh').setScale(1);
@@ -98,20 +104,24 @@ function create ()
     walls.create(650, 150, 'wallh').setScale(1);
 
     walls.create(675, 175, 'wallv').setScale(1);
+    walls.create(675, 225, 'wallv').setScale(1);
+    walls.create(675, 275, 'wallv').setScale(1);
+    walls.create(675, 325, 'wallv').setScale(1);
+
+    walls.create(725, 175, 'wallv').setScale(1);
+    walls.create(725, 225, 'wallv').setScale(1);
+    walls.create(725, 275, 'wallv').setScale(1);
+    walls.create(725, 325, 'wallv').setScale(1);
 
     walls.create(450, 320, 'wallh').setScale(1);
     walls.create(550, 320, 'wallh').setScale(1);
     walls.create(650, 420, 'wallh').setScale(1);
     walls.create(750, 520, 'wallh').setScale(1);
 
-    // The player and its settings
     player = this.physics.add.sprite(400, 250, 'dude');
 
-    //  Player physics properties. Give the little guy a slight bounce.
-    player.setBounce(0.2);
     player.setCollideWorldBounds(true);
 
-    //  Our player animations, turning, walking left and walking right.
     this.anims.create({
         key: 'left',
         frames: this.anims.generateFrameNumbers('dude', { start: 0, end: 3 }),
@@ -132,10 +142,8 @@ function create ()
         repeat: -1
     });
 
-    //  Input Events
     cursors = this.input.keyboard.createCursorKeys();
 
-    //  Some stars to collect, 12 in total, evenly spaced 70 pixels apart along the x axis
     stars = this.physics.add.group({
         key: 'star',
     });
