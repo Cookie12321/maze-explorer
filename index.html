@@ -34,7 +34,7 @@ var config = {
 var player;
 var stars;
 var bombs;
-var platforms;
+var walls;
 var cursors;
 var score = 0;
 var gameOver = false;
@@ -46,6 +46,8 @@ function preload ()
 {
     this.load.image('dirt', 'assets/dirt_0.png');
     this.load.image('ground', 'assets/platform.png');
+    this.load.image('wallv', 'assets/wallv.png');
+    this.load.image('wallh', 'assets/wallh.png');
     this.load.image('star', 'assets/star.png');
     this.load.image('bomb', 'assets/bomb.png');
     this.load.spritesheet('dude', 'assets/dude.png', { frameWidth: 32, frameHeight: 48 });
@@ -70,19 +72,25 @@ function create ()
     this.add.image(700, 500, 'dirt');
     this.add.image(900, 500, 'dirt');
 
+    walls = this.physics.add.staticGroup();
 
-    //  The platforms group contains the ground and the 2 ledges we can jump on
-    platforms = this.physics.add.staticGroup();
+    walls.create(750, 220, 'wallv').setScale(1);
+    walls.create(750, 320, 'wallv').setScale(1);
+    walls.create(750, 420, 'wallv').setScale(1);
+    walls.create(750, 120, 'wallv').setScale(1);
+    walls.create(450, 120, 'wallh').setScale(1);
+    walls.create(550, 120, 'wallh').setScale(1);
+    walls.create(650, 120, 'wallh').setScale(1);
+    walls.create(750, 120, 'wallh').setScale(1);
+    walls.create(450, 320, 'wallh').setScale(1);
+    walls.create(550, 320, 'wallh').setScale(1);
+    walls.create(650, 420, 'wallh').setScale(1);
+    walls.create(750, 520, 'wallh').setScale(1);
 
-    //  Now let's create some ledges
-    platforms.create(600, 400, 'ground').setScale(0.5);
-    platforms.create(400, 400, 'ground').setScale(0.5);
-    platforms.create(800, 400, 'ground').setScale(0.5);
-    platforms.create(50, 250, 'ground').setScale(0.5);
-    platforms.create(750, 220, 'ground').setScale(0.5);
+
 
     // The player and its settings
-    player = this.physics.add.sprite(100, 450, 'dude');
+    player = this.physics.add.sprite(400, 250, 'dude');
 
     //  Player physics properties. Give the little guy a slight bounce.
     player.setBounce(0.2);
@@ -124,9 +132,8 @@ function create ()
     //  The score
     scoreText = this.add.text(16, 16, 'score: 0', { fontSize: '32px', fill: '#000' });
 
-    //  Collide the player and the stars with the platforms
-    this.physics.add.collider(player, platforms);
-    this.physics.add.collider(stars, platforms);
+    //  Collide the player and the stars with the walls
+    this.physics.add.collider(player, walls);
 
     //  Checks to see if the player overlaps with any of the stars, if he does call the collectStar function
 }
