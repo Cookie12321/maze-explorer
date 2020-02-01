@@ -45,7 +45,7 @@ var game = new Phaser.Game(config);
 function preload ()
 {
     this.load.image('dirt', 'assets/dirt_0.png');
-    this.load.image('ground', 'assets/platform.png');
+    this.load.image('ground', 'assets/platform2.png');
     this.load.image('star', 'assets/star.png');
     this.load.image('bomb', 'assets/bomb.png');
     this.load.spritesheet('dude', 'assets/dude.png', { frameWidth: 32, frameHeight: 48 });
@@ -75,11 +75,11 @@ function create ()
     platforms = this.physics.add.staticGroup();
 
     //  Now let's create some ledges
-    platforms.create(600, 400, 'ground').setScale(0.5);
-    platforms.create(400, 400, 'ground').setScale(0.5);
-    platforms.create(800, 400, 'ground').setScale(0.5);
-    platforms.create(50, 250, 'ground').setScale(0.5);
-    platforms.create(750, 220, 'ground').setScale(0.5);
+    platforms.create(600, 400, 'ground');//
+    platforms.create(400, 400, 'ground');//
+    platforms.create(800, 400, 'ground');//
+    platforms.create(50, 250, 'ground');//
+    platforms.create(750, 220, 'ground');//
 
     // The player and its settings
     player = this.physics.add.sprite(100, 450, 'dude');
