@@ -84,8 +84,6 @@ function makeWall(xMin, xMax, yMin, yMax)
             wallX -= 50;
         }
 
-        console.log("wallX: ", wallX);
-
         var missingWall = Math.floor(Math.random()*(height / 50)) * 50;
 
         for(var i = yMin; i < yMax; i += 50)
@@ -107,14 +105,8 @@ function makeWall(xMin, xMax, yMin, yMax)
         var reg2yMin = yMin;
         var reg2yMax = yMax;
 
-        //makeWall(reg1xMin, reg1xMax, reg1yMin, reg1yMax);
-        setTimeout(function() {
-           makeWall(reg1xMin, reg1xMax, reg1yMin, reg1yMax);
-        }, 0);
-        //makeWall(reg2xMin, reg2xMax, reg2yMin, reg2yMax);
-        setTimeout(function() {
-           makeWall(reg2xMin, reg2xMax, reg2yMin, reg2yMax);
-        }, 0);
+        makeWall(reg1xMin, reg1xMax, reg1yMin, reg1yMax);
+        makeWall(reg2xMin, reg2xMax, reg2yMin, reg2yMax);
     }
     else // horizontal wall
     {
@@ -129,8 +121,6 @@ function makeWall(xMin, xMax, yMin, yMax)
         {
             wallY -= 50;
         }
-
-        console.log("wallY: ", wallY);
 
         var missingWallh = Math.floor(Math.random()*(width / 50)) * 50;
         console.log("missing wall: " + missingWallh);
@@ -147,23 +137,14 @@ function makeWall(xMin, xMax, yMin, yMax)
         var reg1yMin = yMin;
         var reg1yMax = wallY;
 
-        console.log("wallY: ", wallY);
-
         // bot region
         var reg2xMin = xMin;
         var reg2xMax = xMax;
         var reg2yMin = wallY;
         var reg2yMax = yMax;
 
-        console.log("wallY: ", wallY);
-
-        setTimeout(function() {
-            makeWall(reg1xMin, reg1xMax, reg1yMin, reg1yMax);
-        }, 0);
-
-        setTimeout(function() {
-            makeWall(reg2xMin, reg2xMax, reg2yMin, reg2yMax);
-        }, 0);
+        makeWall(reg1xMin, reg1xMax, reg1yMin, reg1yMax);
+        makeWall(reg2xMin, reg2xMax, reg2yMin, reg2yMax);
     }
 }
 
@@ -205,13 +186,7 @@ function create ()
     }
 
     walls = this.physics.add.staticGroup();
-
-    setTimeout(function() {
-        makeWall(0,maxWidth,0,maxHeight)
-    }, 0);
-
-
-    // walls.create(450, 100, 'wallh').setScale(1);
+    makeWall(0,maxWidth,0,maxHeight)
 
     player = this.physics.add.sprite(25, 25, 'char');
 
