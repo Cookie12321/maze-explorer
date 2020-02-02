@@ -2,7 +2,7 @@
 <html lang="en"> 
 <head> 
     <meta charset="UTF-8" />
-    <title>Making your first Phaser 3 Game - Part 10</title>
+    <title>Maze explorer</title>
     <script src="//cdn.jsdelivr.net/npm/phaser@3.11.0/dist/phaser.js"></script>
     <style type="text/css">
         body {
@@ -52,7 +52,7 @@ var config = {
 };
 
 var player;
-var stars;
+var fogs;
 var walls;
 var cursors;
 var score = 0;
@@ -167,14 +167,25 @@ function makeWall(xMin, xMax, yMin, yMax)
     }
 }
 
+function clearFog(player, fog){
+    fog.disableBody(true, true);
+}
+function addFogs(){
+
+    for(var i =40; i < maxWidth; i+= 40){
+        for(var j = 40; j < maxHeight; j += 40){
+            fogs.create(i,j, 'fog').setScale(0.4);
+        }
+    }
+
+}
 
 function preload ()
 {
     this.load.image('dirt', 'assets/dirt_0.png');
-    this.load.image('ground', 'assets/platform.png');
+    this.load.image('fog', 'assets/fog.png');
     this.load.image('wallv', 'assets/wallv.png');
     this.load.image('wallh', 'assets/wallh.png');
-    this.load.image('ground', 'assets/platform2.png');
     this.load.image('star', 'assets/star.png');
     this.load.spritesheet('dude', 'assets/dude.png', { frameWidth: 26, frameHeight: 35 });
     this.load.spritesheet('char', 'assets/char.png', { frameWidth: 32, frameHeight: 35 });
@@ -184,20 +195,6 @@ function preload ()
 function create ()
 {   
     // this.add.image(100, 100, 'dirt');
-    // this.add.image(300, 100, 'dirt');
-    // this.add.image(500, 100, 'dirt');
-    // this.add.image(700, 100, 'dirt');
-    // this.add.image(900, 100, 'dirt');
-    // this.add.image(100, 300, 'dirt');
-    // this.add.image(300, 300, 'dirt');
-    // this.add.image(500, 300, 'dirt');
-    // this.add.image(700, 300, 'dirt');
-    // this.add.image(900, 300, 'dirt');
-    // this.add.image(100, 500, 'dirt');
-    // this.add.image(300, 500, 'dirt');
-    // this.add.image(500, 500, 'dirt');
-    // this.add.image(700, 500, 'dirt');
-    // this.add.image(900, 500, 'dirt');
 
     for(var i = 100; i <= maxHeight; i += 200)
     {
@@ -240,21 +237,20 @@ function create ()
         repeat: -1
     });
 
+    fogs = this.physics.add.group();
+
     cursors = this.input.keyboard.createCursorKeys();
 
-    stars = this.physics.add.group({
-        key: 'star',
-    });
-
-    stars.children.iterate(function (child) {
-
-    });
-
-    //  The score
     scoreText = this.add.text(16, 16, 'score: 0', { fontSize: '32px', fill: '#000' });
+
+    setTimeout(function(){
+        addFogs();
+    },1000);
+
 
     //  Collide the player and the stars with the walls
     this.physics.add.collider(player, walls);
+        this.physics.add.overlap(player, fogs, clearFog, null, this);
 
     //  Checks to see if the player overlaps with any of the stars, if he does call the collectStar function
 }
