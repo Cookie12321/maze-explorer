@@ -25,10 +25,18 @@
 
 <script type="text/javascript">
 
+// Albert Le and Dylan Sun
+// 2/1/20 @ HackSC
+
+const maxWidth = 2000;
+const maxHeight = 1500;
+
+const speed = 250;
+
 var config = {
     type: Phaser.AUTO,
-    width: 1000,
-    height: 600,
+    width: maxWidth,
+    height: maxHeight,
     parent: 'phaser-maze',
     physics: {
         default: 'arcade',
@@ -58,7 +66,7 @@ function makeWall(xMin, xMax, yMin, yMax)
     var width = xMax - xMin;
     var height = yMax - yMin;
 
-    if (width * height <= 10000)
+    if (width * height <= 2500)
     {
         return;
     }
@@ -80,7 +88,8 @@ function makeWall(xMin, xMax, yMin, yMax)
 
         var missingWall = Math.floor(Math.random()*(height / 50)) * 50;
 
-        for(var i = yMin; i < yMax; i += 50){
+        for(var i = yMin; i < yMax; i += 50)
+        {
             if (i!= missingWall + yMin){
                 walls.create(wallX, i + 25, 'wallv');
             }
@@ -101,11 +110,11 @@ function makeWall(xMin, xMax, yMin, yMax)
         //makeWall(reg1xMin, reg1xMax, reg1yMin, reg1yMax);
         setTimeout(function() {
            makeWall(reg1xMin, reg1xMax, reg1yMin, reg1yMax);
-        }, 200);
+        }, 0);
         //makeWall(reg2xMin, reg2xMax, reg2yMin, reg2yMax);
         setTimeout(function() {
            makeWall(reg2xMin, reg2xMax, reg2yMin, reg2yMax);
-        }, 200);
+        }, 0);
     }
     else // horizontal wall
     {
@@ -150,11 +159,11 @@ function makeWall(xMin, xMax, yMin, yMax)
 
         setTimeout(function() {
             makeWall(reg1xMin, reg1xMax, reg1yMin, reg1yMax);
-        }, 200);
+        }, 0);
 
         setTimeout(function() {
             makeWall(reg2xMin, reg2xMax, reg2yMin, reg2yMax);
-        }, 200);
+        }, 0);
     }
 }
 
@@ -174,27 +183,35 @@ function preload ()
 
 function create ()
 {   
-    this.add.image(100, 100, 'dirt');
-    this.add.image(300, 100, 'dirt');
-    this.add.image(500, 100, 'dirt');
-    this.add.image(700, 100, 'dirt');
-    this.add.image(900, 100, 'dirt');
-    this.add.image(100, 300, 'dirt');
-    this.add.image(300, 300, 'dirt');
-    this.add.image(500, 300, 'dirt');
-    this.add.image(700, 300, 'dirt');
-    this.add.image(900, 300, 'dirt');
-    this.add.image(100, 500, 'dirt');
-    this.add.image(300, 500, 'dirt');
-    this.add.image(500, 500, 'dirt');
-    this.add.image(700, 500, 'dirt');
-    this.add.image(900, 500, 'dirt');
+    // this.add.image(100, 100, 'dirt');
+    // this.add.image(300, 100, 'dirt');
+    // this.add.image(500, 100, 'dirt');
+    // this.add.image(700, 100, 'dirt');
+    // this.add.image(900, 100, 'dirt');
+    // this.add.image(100, 300, 'dirt');
+    // this.add.image(300, 300, 'dirt');
+    // this.add.image(500, 300, 'dirt');
+    // this.add.image(700, 300, 'dirt');
+    // this.add.image(900, 300, 'dirt');
+    // this.add.image(100, 500, 'dirt');
+    // this.add.image(300, 500, 'dirt');
+    // this.add.image(500, 500, 'dirt');
+    // this.add.image(700, 500, 'dirt');
+    // this.add.image(900, 500, 'dirt');
+
+    for(var i = 100; i <= maxHeight; i += 200)
+    {
+        for(var j = 100; j <= maxWidth; j += 200)
+        {
+            this.add.image(j, i, 'dirt');
+        }
+    }
 
     walls = this.physics.add.staticGroup();
 
     setTimeout(function() {
-        makeWall(0,1000,0,600)
-    }, 10);
+        makeWall(0,maxWidth,0,maxHeight)
+    }, 0);
 
 
     // walls.create(450, 100, 'wallh').setScale(1);
@@ -251,13 +268,13 @@ function update ()
 
     if (cursors.left.isDown)
     {
-        player.setVelocityX(-160);
+        player.setVelocityX(-1 * speed);
 
         player.anims.play('left', true);
     }
     else if (cursors.right.isDown)
     {
-        player.setVelocityX(160);
+        player.setVelocityX(speed);
 
         player.anims.play('right', true);
     }
@@ -270,10 +287,10 @@ function update ()
 
     if (cursors.up.isDown)
     {
-        player.setVelocityY(-160);
+        player.setVelocityY(-1 * speed);
     }
     else if (cursors.down.isDown){
-        player.setVelocityY(160);
+        player.setVelocityY(speed);
     }
     else{
         player.setVelocityY(0);
