@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <title>Maze explorer</title>
     <script src="//cdn.jsdelivr.net/npm/phaser@3.11.0/dist/phaser.js"></script>
+    <link href="https://fonts.googleapis.com/css?family=Francois+One&display=swap" rel="stylesheet">
     <style type="text/css">
         body {
             margin: 0;
@@ -15,11 +16,20 @@
         #phaser-maze{
             margin-top:50px;
         }
+        .sidebar{
+            position:absolute;
+            margin-left:6%;
+            margin-top:10%;
+            font-size:60px;
+            line-height:55px;
+            width:200px;
+            font-family: 'Francois One', sans-serif;
+        }
         }
     </style>
 </head>
 <body>
-
+<div class="sidebar">maze explorer</div>
 <div id="phaser-maze">
 </div>
 
@@ -28,8 +38,8 @@
 // Albert Le and Dylan Sun
 // 2/1/20 @ HackSC
 
-const maxWidth = 1600;
-const maxHeight = 1200;
+const maxWidth = 1000;
+const maxHeight = 800;
 
 const speed = 250;
 
